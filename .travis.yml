@@ -19,6 +19,6 @@ deploy:
   provider: npm
   email: "krupnik.yuri@gmail.com"
   api_key: "6bdfedd7-be9a-4d4f-aa3d-a804901ee3da"
-  on:
-    tags: true
-    branch: master
+#  on:
+#    tags: true
+#    branch: master

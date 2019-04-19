@@ -1,4 +1,4 @@
-var Generator = require('yeoman-generator/lib');
+var Generator = require('yeoman-generator');
 
 module.exports = class JestGenerator extends Generator {
     constructor(args, opts) {
