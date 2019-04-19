@@ -1,6 +1,6 @@
 {
   "name": "generator-jest-extented",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "extend jest generator",
   "main": "index.js",
   "scripts": {
