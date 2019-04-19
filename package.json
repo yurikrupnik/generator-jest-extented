@@ -8,7 +8,7 @@
     "pretest": "eslint ./app",
     "test": "jest",
     "test:watch": "jest --watch",
-    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "coverage": "jest --coverage",
     "build": "webpack",
     "clean": "rimraf dist/"
   },

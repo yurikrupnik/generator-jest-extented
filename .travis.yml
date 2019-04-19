@@ -13,12 +13,12 @@ jobs:
   include:
     - stage: Produce Coverage
       node_js: node
-      script: npm run coverage
+      script: jest --coverage --coverageReporters=text-lcov | coveralls
 
-#deploy:
-#  provider: npm
-#  email: "krupnik.yuri@gmail.com"
-#  api_key: "ds"
-#  on:
-#    tags: true
-#    branch: master
+deploy:
+  provider: npm
+  email: "krupnik.yuri@gmail.com"
+  api_key: "ds"
+  on:
+    tags: true
+    branch: master
