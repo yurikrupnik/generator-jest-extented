@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 
-const {
-    describe, test, beforeAll, afterAll
-} = global;
+// const {
+//     describe, test, beforeAll, afterAll, expect
+// } = global;
 
 describe('App', () => {
     let browser;
@@ -23,5 +23,8 @@ describe('App', () => {
         await page.goto('http://localhost:7000');
         const hrefs = await page.$$eval('a', as => as.map(a => a.href));
         console.log('hrefs', hrefs); // eslint-disable-line
+        const a = jest.fn();
+        expect(a).toBeCalled();
+        return false;
     });
 });

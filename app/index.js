@@ -1,14 +1,22 @@
-var Generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
+// import Generator from 'yeoman-generator';
 
 module.exports = class JestGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
 
+        this.option('testEnvironment', {
+            type: String,
+            required: false,
+            desc: 'Test Environment',
+            default: 'jsdom'
+        });
+
         this.option('destinationPath', {
             type: String,
             required: false,
             desc: 'Destination path',
-            default: 'src'
+            default: ''
         });
 
         this.option('e2ePath', {
@@ -22,7 +30,7 @@ module.exports = class JestGenerator extends Generator {
             type: Boolean,
             required: false,
             desc: 'Include e2e',
-            default: true
+            default: false
         });
 
         this.option('setup', {
@@ -41,7 +49,7 @@ module.exports = class JestGenerator extends Generator {
     }
 
     writing() {
-        const { e2ePath, e2e, setup} = this.options;
+        const { e2ePath, e2e, setup } = this.options;
 
         if (e2e) {
             this.fs.copyTpl(
@@ -61,12 +69,12 @@ module.exports = class JestGenerator extends Generator {
         const { css, e2e } = this.options;
         this.npmInstall([
             'jest',
-        ].concat(css ? 'identity-obj-proxy' : ''), {'save-dev': true});
+        ].concat(css ? 'identity-obj-proxy' : ''), { 'save-dev': true });
 
         if (e2e) {
             this.npmInstall([
                 // 'puppeteer',
-            ], {'save-dev': true});
+            ], { 'save-dev': true });
         }
     }
 
@@ -75,20 +83,22 @@ module.exports = class JestGenerator extends Generator {
     }
 
     _updatePackageJson() {
-        const {destinationPath, e2ePath, e2e, setup, css} = this.options;
+        const {
+            destinationPath, e2ePath, e2e, setup, css
+        } = this.options;
         const scripts = {
-            'test': `jest ${destinationPath}/`,
-            'test:watch': `jest ${destinationPath}/ --watch`,
-            'test:coverage': `jest ${destinationPath}/ --coverage`
+            test: `jest ${destinationPath}`,
+            'test:watch': `jest ${destinationPath} --watch`,
+            'test:coverage': `jest ${destinationPath} --coverage`,
         };
 
         const e2eScripts = {
             'test:e2e': `jest ${e2ePath}/`,
         };
 
-        let jestConfig = {
-            "modulePathIgnorePatterns": [
-                "<rootDir>/.*/__mocks__"
+        const jestConfig = {
+            modulePathIgnorePatterns: [
+                '<rootDir>/.*/__mocks__'
             ]
         };
 
@@ -98,8 +108,8 @@ module.exports = class JestGenerator extends Generator {
 
         if (css) {
             jestConfig.moduleNameMapper = {
-                "\\.(css|less|scss)$": "identity-obj-proxy"
-            }
+                '\\.(css|less|scss)$': 'identity-obj-proxy'
+            };
         }
 
         this.fs.extendJSON(
@@ -114,5 +124,4 @@ module.exports = class JestGenerator extends Generator {
     conflict() {
         this._updatePackageJson();
     }
-
 };
