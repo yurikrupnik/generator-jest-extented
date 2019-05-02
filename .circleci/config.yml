@@ -20,4 +20,4 @@ jobs:
             - ./node_modules
       - run:
           name: test
-          command: npm run test:coveralls
+          command: jest --coverage --coverageReporters=text-lcov | coveralls
