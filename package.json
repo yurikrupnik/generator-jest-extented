@@ -8,9 +8,9 @@
     "lint:templates": "ejslint app/templates**",
     "prsetest": "eslint app",
     "test": "jest app",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:coveralls": "jest src --coverage | coveralls",
+    "test:watch": "jest app--watch",
+    "test:coverage": "jest app--coverage",
+    "test:coveralls": "npm run test:coverage | coveralls",
     "prebuild": "rimraf dist",
     "build": "webpack"
   },

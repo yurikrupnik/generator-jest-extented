@@ -1,6 +1,6 @@
-import Generator from 'yeoman-generator';
+import generator from 'yeoman-generator';
 
-class JestGenerator extends Generator {
+class JestGenerator extends generator {
     constructor(args, opts) {
         super(args, opts);
 

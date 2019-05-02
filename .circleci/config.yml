@@ -1,9 +1,19 @@
 version: 2
 jobs:
+  stam:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      -
   build:
     working_directory: ~/mern-starter
     docker:
       - image: circleci/node
+      - run:
+          name: abc
+          command echo $NODE_ENV
     steps:
       - checkout
       - run:
