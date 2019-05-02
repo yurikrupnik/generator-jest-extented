@@ -9,11 +9,13 @@ module.exports = {
         __filename: true,
     },
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
-    devtool: 'source-map',
     entry: './index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        chunkFilename: '[name].js'
+        filename: '[name].js',
+        publicPath: '/',
+        library: 'generator-jest-extended',
+        libraryTarget: 'umd'
     },
     mode: 'development',
     module: {

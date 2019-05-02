@@ -33,13 +33,6 @@ module.exports = class JestGenerator extends Generator {
             default: false
         });
 
-        this.option('setup', {
-            type: Boolean,
-            required: false,
-            desc: 'Include jestsetup.js file',
-            default: false
-        });
-
         this.option('css', {
             type: Boolean,
             required: false,
@@ -49,7 +42,7 @@ module.exports = class JestGenerator extends Generator {
     }
 
     writing() {
-        const { e2ePath, e2e, setup } = this.options;
+        const { e2ePath, e2e } = this.options;
 
         if (e2e) {
             this.fs.copyTpl(
@@ -57,15 +50,9 @@ module.exports = class JestGenerator extends Generator {
                 this.destinationPath(e2ePath)
             );
         }
-        if (setup) {
-            this.fs.copyTpl(
-                this.templatePath('jestsetup.js'),
-                this.destinationPath('jestsetup.js')
-            );
-        }
     }
 
-    _installDevPackages() {
+    installDevPackages() {
         const { css, e2e } = this.options;
         this.npmInstall([
             'jest',
@@ -73,18 +60,32 @@ module.exports = class JestGenerator extends Generator {
 
         if (e2e) {
             this.npmInstall([
-                // 'puppeteer',
+                'puppeteer',
             ], { 'save-dev': true });
         }
     }
 
     install() {
-        this._installDevPackages();
+        this.installDevPackages();
     }
 
-    _updatePackageJson() {
+    conflict() {
+        this.updatePackageJson();
+    }
+
+    updatePackageJson() {
+        this.fs.extendJSON(
+            this.destinationPath('package.json'),
+            {
+                scripts: this.handleScriptsPkg(),
+                jest: this.handleJestPkg(),
+            }
+        );
+    }
+
+    handleScriptsPkg() {
         const {
-            destinationPath, e2ePath, e2e, setup, css
+            destinationPath, e2ePath, e2e
         } = this.options;
         const scripts = {
             test: `jest ${destinationPath}`,
@@ -96,15 +97,21 @@ module.exports = class JestGenerator extends Generator {
             'test:e2e': `jest ${e2ePath}/`,
         };
 
+        return Object.assign({}, scripts, e2e ? e2eScripts : {});
+    }
+
+    handleJestPkg() {
+        const {
+            css,
+            testEnvironment
+        } = this.options;
+
         const jestConfig = {
+            testEnvironment,
             modulePathIgnorePatterns: [
                 '<rootDir>/.*/__mocks__'
             ]
         };
-
-        if (setup) {
-            jestConfig.setupFiles = ['./jestsetup.js'];
-        }
 
         if (css) {
             jestConfig.moduleNameMapper = {
@@ -112,16 +119,6 @@ module.exports = class JestGenerator extends Generator {
             };
         }
 
-        this.fs.extendJSON(
-            this.destinationPath('package.json'),
-            {
-                scripts: Object.assign({}, scripts, e2e ? e2eScripts : {}),
-                jest: jestConfig,
-            }
-        );
-    }
-
-    conflict() {
-        this._updatePackageJson();
+        return jestConfig;
     }
 };
