@@ -1,13 +1,5 @@
 version: 2
 jobs:
-  stam:
-    working_directory: ~/mern-starter
-    docker:
-      - image: circleci/node
-    steps:
-      - checkout
-      - run
-        echo $GIT_NAME
   build:
     working_directory: ~/mern-starter
     docker:
