@@ -12,7 +12,10 @@ module.exports = {
     entry: './index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        chunkFilename: '[name].js'
+        filename: '[name].js',
+        publicPath: '/',
+        library: 'generator-jest-extended',
+        libraryTarget: 'umd'
     },
     mode: 'development',
     module: {

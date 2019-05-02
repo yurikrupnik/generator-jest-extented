@@ -68,6 +68,5 @@ app
 /.babelrc
 /.editorconfig
 /.eslintrc
-/.travis.yml
 webpack.config.js
 init.js

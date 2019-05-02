@@ -1,6 +1,6 @@
 {
-  "name": "generator-jest-extented",
-  "version": "1.0.2",
+  "name": "generator-jest-extended",
+  "version": "1.0.3",
   "description": "extend jest generator",
   "main": "dist/main.js",
   "module": "dist/main.js",
@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yurikrupnik/generator-jest-extented.git"
+    "url": "git+https://github.com/yurikrupnik/generator-jest-extended.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yurikrupnik/generator-jest-extented/issues"
+    "url": "https://github.com/yurikrupnik/generator-jest-extended/issues"
   },
-  "homepage": "https://github.com/yurikrupnik/generator-jest-extented#readme",
+  "homepage": "https://github.com/yurikrupnik/generator-jest-extended#readme",
   "engines": {
     "npm": ">= 6.0.0"
   },
