@@ -9,7 +9,7 @@
     "prsetest": "eslint app",
     "test": "jest app",
     "test:watch": "jest --watch",
-    "coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "prebuild": "rimraf dist",
     "build": "webpack"
   },
