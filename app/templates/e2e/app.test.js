@@ -1,8 +1,4 @@
-const puppeteer = require('puppeteer');
-
-// const {
-//     describe, test, beforeAll, afterAll, expect
-// } = global;
+const puppeteer = require('puppeteer'); // eslint-disable-line
 
 describe('App', () => {
     let browser;
