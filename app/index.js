@@ -1,6 +1,6 @@
 import Generator from 'yeoman-generator';
 
-module.exports = class JestGenerator extends Generator {
+class JestGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
 
@@ -120,4 +120,6 @@ module.exports = class JestGenerator extends Generator {
 
         return jestConfig;
     }
-};
+}
+
+export default JestGenerator;
