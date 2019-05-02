@@ -4,9 +4,6 @@ jobs:
     working_directory: ~/mern-starter
     docker:
       - image: circleci/node
-      - run:
-          name: abc
-          command echo $NODE_ENV
     steps:
       - checkout
       - run:
