@@ -21,6 +21,6 @@ jobs:
       - run:
           name: test
           command: npm run test
-       - run:
-         name: coverage
-         command: jest --coverage --coverageReporters=text-lcov | coveralls
+      - run:
+          name: coverage
+          command: jest --coverage --coverageReporters=text-lcov | coveralls
