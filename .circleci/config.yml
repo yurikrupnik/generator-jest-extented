@@ -151,9 +151,9 @@ workflows:
   test-deploy:
     jobs:
       - deploy:
-        requires:
-          - build
-          - test
+#        requires:
+#          - build
+#          - test
         filters:
           tags:
             only: /^v.*/
