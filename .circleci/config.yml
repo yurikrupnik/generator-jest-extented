@@ -114,7 +114,9 @@ jobs:
           paths: .
 
   build:
-    <<: *node9
+    working_directory: ~/repo
+      docker:
+        - image: circleci/node
     steps:
       - checkout
       - run:
@@ -132,6 +134,20 @@ jobs:
       - run:
           name: test
           command: npm run test
+  deploy:
+    <<: *node12
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Set registry URL
+          command: npm set registry https://packagecloud.io/example-user/example-repo/npm/
+      - run:
+          name: Authenticate with registry
+          command: echo "//packagecloud.io/example-user/example-repo/npm/:_authToken=$PACKAGECLOUD_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
 #      - run: # run coverage report
 #          name: code-coverage
 #          command: npm run test:coveralls
