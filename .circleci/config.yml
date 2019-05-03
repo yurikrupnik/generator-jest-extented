@@ -185,6 +185,8 @@ workflows:
       - test_node_12
       - test
       - deploy
+      - requires:
+        - test
 #      - build
 #      - test
 #      - deploy:
