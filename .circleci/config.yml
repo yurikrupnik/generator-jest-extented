@@ -150,7 +150,7 @@ jobs:
 
 workflows:
   version: 2
-  test_and_release:
+  test_and_nodes:
     jobs:
       - test_node_8
       - test_node_9
@@ -158,10 +158,16 @@ workflows:
       - test_node_11
       - test_node_12
 
+  schedule-workflow:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
 #      - test
-      - deploy
-        - requires:
-          - test_node_12
+
 #        filters:
 #          tags
 #      - build
