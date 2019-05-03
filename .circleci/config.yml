@@ -158,14 +158,14 @@ workflows:
       - test_node_11
       - test_node_12
 #      - test
-      - deploy:
-          - requires:
-              - test
-            filters:
-              tags:
-                only: /^v.*/
-              branches:
-                ignore: /.*/
+      - deploy
+#          - requires:
+#              - test
+#            filters:
+#              tags:
+#                only: /^v.*/
+#              branches:
+#                ignore: /.*/
 #      - build
 #      - test
 #      - deploy:
