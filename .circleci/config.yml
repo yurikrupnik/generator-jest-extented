@@ -121,7 +121,7 @@ workflows:
               only:
                 - master
     jobs:
-      - build
+      - test
       - deploy
 #      - test
 
