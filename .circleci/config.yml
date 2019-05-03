@@ -96,6 +96,7 @@ workflows:
 #      - test
 
   test-buikd-deploy:
+    version: 2
     jobs:
       - build
       - test
