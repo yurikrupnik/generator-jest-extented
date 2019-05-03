@@ -72,7 +72,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: npm install
@@ -87,51 +86,6 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-
-  #  build:
-  #    working_directory: ~/repo
-  #      docker:
-  #        - image: circleci/node
-  #    steps:
-  #      - checkout
-  #      - run:
-  #          name: update-npm
-  #          command: 'sudo npm install -g npm@5'
-  #      - restore_cache:
-  #          key: dependency-cache-{{ checksum "package.json" }}
-  #      - run:
-  #          name: install-npm-wee
-  #          command: npm install
-  #      - save_cache:
-  #          key: dependency-cache-{{ checksum "package.json" }}
-  #          paths:
-  #            - ./node_modules
-  #      - run:
-  #          name: test
-  #          command: npm run build
-  #  deploy:
-  #    <<: *node12
-  #    steps:
-  #      - attach_workspace:
-  #          at: ~/repo
-  #      - run:
-  #          name: Authenticate with registry
-  #          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-  #      - run:
-  #          name: Publish package
-  #          command: npm publish
-  #      - run: # run coverage report
-  #          name: code-coverage
-  #          command: npm run test:coveralls
-  #      - store_artifacts: # special step to save test results as as artifact
-  #           # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-  #           path: test-results.xml
-  #           prefix: tests
-  #      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-  #           path: coverage
-  #           prefix: coverage
-  #      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-  #           path: test-results.xml
 
   deploy:
     <<: *node10
@@ -166,6 +120,9 @@ workflows:
             branches:
               only:
                 - master
+    jobs:
+      - build
+      - deploy
 #      - test
 
 #        filters:
