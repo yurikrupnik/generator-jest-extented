@@ -183,9 +183,7 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
-      - deploy:
-        - requires:
-          - test_node_12
+      - deploy
 #      - build
 #      - test
 #      - deploy:
