@@ -140,10 +140,13 @@ jobs:
 #          name: Publish package
 #          command: npm publish
 
-#workflows:
-#  version: 2
-#  test_and_release:
-#    jobs:
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - test_node_6
+      - test_node_7
+      - test_node_8
 #      - test
 #      - build
 #      - deploy:
