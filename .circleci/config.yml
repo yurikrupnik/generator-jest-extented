@@ -183,10 +183,10 @@ workflows:
       - test_node_12
       - build
       - test
-      - deploy
-        - reuires:
-          - build
-          - test
+      - deploy:
+          - requires:
+              - test
+              - build
 
 #      - test
 #      - build
