@@ -1,72 +1,23 @@
 version: 2
-#node10: &node10
-#  working_directory: ~/repo
-#  docker:
-#    - image: circleci/node:10
 
-node8: &node8
+node: &node
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8
-
-node9: &node9
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:9
-
-node10: &node10
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:10
-
-node11: &node11
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:11
-
-node12: &node12
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:12
+    - image: circleci/node
 
 jobs:
-  test_node_8:
-    <<: *node8
+  test_latest_node:
+    <<: *node
     steps:
       - checkout
       - run: npm install
       - run: npm run test
       - run: npm run build
-  test_node_9:
-    <<: *node9
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
-  test_node_10:
-    <<: *node10
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
-  test_node_11:
-    <<: *node11
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
-  test_node_12:
-    <<: *node12
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
+      - run: npm run test:coverage
+      - run: npm run test:coveralls
+
   test:
-    <<: *node10
+    <<: *node
     steps:
       - checkout
       - restore_cache:
@@ -113,7 +64,7 @@ jobs:
           paths: .
 
   deploy:
-    <<: *node10
+    <<: *node
     steps:
 #      - attach_workspace:
 #            at: /tmp/workspace
@@ -129,27 +80,26 @@ jobs:
 
 workflows:
   version: 2
-  test_and_nodes:
+  test_all:
     jobs:
-      - test_node_8
-      - test_node_9
-      - test_node_10
-      - test_node_11
-      - test_node_12
 
-  schedule-workflow:
-    triggers:
-      - schedule:
-          cron: "0 * * * *"
-          filters:
-            branches:
-              only:
-                - master
+
+#  schedule-workflow:
+#    triggers:
+#      - schedule:
+#          cron: "0 * * * *"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - test
+
+  test-buikd-deploy:
     jobs:
+      - build
       - test
-
-  test-deploy:
-    jobs:
+      - test_latest_node
       - deploy
 #        requires:
 #          - build
