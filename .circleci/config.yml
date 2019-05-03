@@ -20,7 +20,24 @@ jobs:
             - ./node_modules
       - run:
           name: test
-          command: npm run test
+  coverage:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node:11
+    steps:
+      - checkout
       - run:
-          name: coverage
-          command: jest --coverage --coverageReporters=text-lcov | coveralls
+          name: update-npm
+          command: 'sudo npm install -g npm@5'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test coverage
+          command: npm run test:coveralls
