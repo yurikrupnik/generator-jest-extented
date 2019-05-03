@@ -4,16 +4,6 @@ version: 2
 #  docker:
 #    - image: circleci/node:10
 
-node6: &node6
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:6
-
-node7: &node7
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:7
-
 node8: &node8
   working_directory: ~/repo
   docker:
@@ -40,20 +30,6 @@ node12: &node12
     - image: circleci/node:12
 
 jobs:
-  test_node_6:
-    <<: *node6
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
-  test_node_7:
-    <<: *node7
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
   test_node_8:
     <<: *node8
     steps:
@@ -176,15 +152,20 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-      - test_node_6
-      - test_node_7
       - test_node_8
       - test_node_9
       - test_node_10
       - test_node_11
       - test_node_12
       - test
-      - deploy
+      - deploy:
+        requires:
+          - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
 #      - build
 #      - test
 #      - deploy:
