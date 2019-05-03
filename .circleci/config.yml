@@ -157,12 +157,13 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
+
 #      - test
       - deploy
-#          - requires:
-#              - test
-        filters:
-          tags
+        - requires:
+          - test_node_12
+#        filters:
+#          tags
 #      - build
 #      - test
 #      - deploy:
