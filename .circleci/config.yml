@@ -82,14 +82,14 @@ workflows:
   version: 2
   test_all:
     jobs:
-      -test_latest_node
+      - test_latest_node
 
-#  test-build-deploy:
-#    version: 2
-#    jobs:
-#      - build
-#      - test
-#      - deploy
+  test-build-deploy:
+    version: 2
+    jobs:
+      - build
+      - test
+      - deploy
 #        requires:
 #          - build
 #          - test
