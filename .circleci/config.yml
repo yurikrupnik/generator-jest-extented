@@ -28,15 +28,18 @@ jobs:
       - run: npm install
       - run:
           name: Run tests
-          command: npm run test
+          command: npm run test:coverage
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
+      - store_artifacts:
+          path: coverage
+
+#      - persist_to_workspace:
+#          root: ~/repo
+#          paths: .
 
   build:
     working_directory: ~/tmp/local
@@ -59,9 +62,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths: .
+#      - persist_to_workspace:
+#          root: /tmp/workspace
+#          paths: .
 
   deploy:
     <<: *node
