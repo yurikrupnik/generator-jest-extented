@@ -13,8 +13,8 @@ jobs:
       - run: npm install
       - run: npm run test
       - run: npm run build
-      - run: npm run test:coverage
-      - run: npm run test:coveralls
+      - run: npm run test
+#      - run: npm run test:coveralls
 
   test:
     <<: *node
