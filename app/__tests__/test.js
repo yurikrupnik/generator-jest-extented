@@ -2,7 +2,7 @@ const helpers = require('yeoman-test');
 const assert = require('yeoman-assert');
 const path = require('path');
 
-describe('jest-extented Generator', () => {
+describe('jest Generator', () => {
     test('default run', () => helpers
         .run(path.join(__dirname, '../index.js'))
         .then(() => {

@@ -17,7 +17,7 @@ module.exports = {
         library: 'generator-jest-extended',
         libraryTarget: 'umd'
     },
-    mode: 'development',
+    mode: 'production',
     module: {
         rules: [
             {
