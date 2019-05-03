@@ -9,8 +9,7 @@
     "prsetest": "eslint app",
     "test": "jest app",
     "test:watch": "jest app--watch",
-    "test:coverage": "jest app --coverage",
-    "test:coveralls": "jest app --coverage | coveralls",
+    "test:coveralls": "jest app --coverage --coverageReporters=text-lcov | coveralls",
     "prebuild": "rimraf dist",
     "build": "webpack"
   },
@@ -33,6 +32,7 @@
     "npm": ">= 6.0.0"
   },
   "jest": {
+    "collectCoverage": true,
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "templates"
@@ -57,6 +57,7 @@
     "@babel/preset-env": "^7.4.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "codecov": "^3.3.0",
     "coveralls": "^3.0.3",
     "ejs-lint": "^0.3.0",
     "eslint": "^5.3.0",
