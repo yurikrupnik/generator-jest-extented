@@ -82,7 +82,7 @@ workflows:
   version: 2
   test_all:
     jobs:
-
+      -test_latest_node
 
 #  schedule-workflow:
 #    triggers:
@@ -99,7 +99,6 @@ workflows:
     jobs:
       - build
       - test
-      - test_latest_node
       - deploy
 #        requires:
 #          - build
