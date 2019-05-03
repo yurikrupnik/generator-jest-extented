@@ -111,15 +111,16 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
+
   deploy:
-#    <<: *node10
+    <<: *node10
 
     steps:
-      - attach_workspace:
-            at: /tmp/workspace
-#      - checkout
-#      - run: npm install
-#      - run: npm run build
+#      - attach_workspace:
+#            at: /tmp/workspace
+      - checkout
+      - run: npm install
+      - run: npm run build
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
