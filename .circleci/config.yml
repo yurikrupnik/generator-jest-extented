@@ -1,39 +1,47 @@
 version: 2
-defaults: &defaults
+node10: &node10
   working_directory: ~/repo
   docker:
     - image: circleci/node:10
 
+node9: &node9
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:9
 jobs:
-  test:
-    <<: *defaults
+  test_node_6:
+    docker:
+      - image: circleci/node:6
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
       - run: npm install
-      - run:
-          name: Run tests
-          command: npm run test
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
+#  test:
+#    <<: *defaults
+#    steps:
+#      - checkout
+#
+#      - restore_cache:
+#          keys:
+#            - v1-dependencies-{{ checksum "package.json" }}
+#            # fallback to using the latest cache if no exact match is found
+#            - v1-dependencies-
+#
+#      - run: npm install
+#      - run:
+#          name: Run tests
+#          command: npm run test
+#
+#      - save_cache:
+#          paths:
+#            - node_modules
+#          key: v1-dependencies-{{ checksum "package.json" }}
+#
+#      - persist_to_workspace:
+#          root: ~/repo
+#          paths: .
 
   build:
-    working_directory: ~/mern-starter/build
-    docker:
-      - image: circleci/node:8
+    <<: *node9
     steps:
       - checkout
       - run:
@@ -65,7 +73,7 @@ jobs:
            path: test-results.xml
 
   deploy:
-    <<: *defaults
+    <<: *node10
     steps:
       - attach_workspace:
           at: ~/repo
@@ -78,7 +86,7 @@ jobs:
 
 workflows:
   version: 2
-  test-deploy:
+  test_and_release:
     jobs:
       - test:
       - build:
