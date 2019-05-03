@@ -10,7 +10,7 @@
     "test": "jest app",
     "test:watch": "jest app--watch",
     "test:coverage": "jest app--coverage",
-    "test:coveralls": "jest app--coverage --coverageReporters=text-lcov | coveralls",
+    "test:coveralls": "jest app--coverage | coveralls",
     "prebuild": "rimraf dist",
     "build": "webpack"
   },
