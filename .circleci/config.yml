@@ -103,7 +103,6 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
-
       - save_cache:
           paths:
             - node_modules
@@ -184,6 +183,7 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
+      - test
       - deploy
 #      - build
 #      - test
