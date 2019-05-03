@@ -134,7 +134,7 @@ jobs:
 #           path: test-results.xml
 
   deploy:
-    <<: *node12
+    <<: *node10
     steps:
 #      - attach_workspace:
 #          at: ~/repo
