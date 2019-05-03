@@ -35,12 +35,11 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      steps:
-        - codecov/upload:
-          file: {{ coverage_report_filepath }}
-          token: 530f42a5-72fb-4b4b-b7a5-54172f9d30a8
-      - store_artifacts:
-          path: sasd
+#      - codecov/upload:
+#        file: {{ coverage_report_filepath }}
+#        token: 530f42a5-72fb-4b4b-b7a5-54172f9d30a8
+#      - store_artifacts:
+#          path: sasd
 
 #      - persist_to_workspace:
 #          root: ~/repo
