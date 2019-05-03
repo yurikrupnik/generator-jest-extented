@@ -85,7 +85,6 @@ workflows:
       - test_latest_node
 
   test-build-deploy:
-    version: 2
     jobs:
       - build
       - test
