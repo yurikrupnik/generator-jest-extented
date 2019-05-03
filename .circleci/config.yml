@@ -3,7 +3,12 @@ jobs:
   build:
     working_directory: ~/mern-starter
     docker:
+      - image: circleci/node:6
+      - image: circleci/node:8
+      - image: circleci/node:9
       - image: circleci/node:10
+      - image: circleci/node:11
+      - image: circleci/node:12
     steps:
       - checkout
       - run:
