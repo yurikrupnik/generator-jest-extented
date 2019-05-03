@@ -46,66 +46,72 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_7:
     <<: *node7
     steps:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_8:
     <<: *node8
     steps:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_9:
     <<: *node9
     steps:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_10:
     <<: *node10
     steps:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_11:
     <<: *node11
     steps:
       - checkout
       - run: npm install
       - run: npm run test
+      - run: npm run build
   test_node_12:
     <<: *node12
     steps:
       - checkout
       - run: npm install
       - run: npm run test
-#  test:
-#    <<: *defaults
-#    steps:
-#      - checkout
-#
-#      - restore_cache:
-#          keys:
-#            - v1-dependencies-{{ checksum "package.json" }}
-#            # fallback to using the latest cache if no exact match is found
-#            - v1-dependencies-
-#
-#      - run: npm install
-#      - run:
-#          name: Run tests
-#          command: npm run test
-#
-#      - save_cache:
-#          paths:
-#            - node_modules
-#          key: v1-dependencies-{{ checksum "package.json" }}
-#
-#      - persist_to_workspace:
-#          root: ~/repo
-#          paths: .
+      - run: npm run build
+  test:
+    <<: *node10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm install
+      - run:
+          name: Run tests
+          command: npm run test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
 
   build:
     <<: *node9
@@ -162,6 +168,7 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
+
 #      - test
 #      - build
 #      - deploy:
