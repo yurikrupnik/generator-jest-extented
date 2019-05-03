@@ -34,6 +34,11 @@ node11: &node11
   docker:
     - image: circleci/node:11
 
+node12: &node12
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:12
+
 jobs:
   test_node_6:
     <<: *node6
@@ -67,6 +72,12 @@ jobs:
       - run: npm run test
   test_node_11:
     <<: *node11
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
+  test_node_12:
+    <<: *node12
     steps:
       - checkout
       - run: npm install
@@ -147,6 +158,10 @@ workflows:
       - test_node_6
       - test_node_7
       - test_node_8
+      - test_node_9
+      - test_node_10
+      - test_node_11
+      - test_node_12
 #      - test
 #      - build
 #      - deploy:
