@@ -158,17 +158,17 @@ jobs:
 #      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
 #           path: test-results.xml
 
-#  deploy:
-#    <<: *node10
-#    steps:
-#      - attach_workspace:
-#          at: ~/repo
-#      - run:
-#          name: Authenticate with registry
-#          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-#      - run:
-#          name: Publish package
-#          command: npm publish
+  deploy:
+    <<: *node12
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
 
 workflows:
   version: 2
@@ -181,6 +181,7 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
+      - deploy
 #      - build
 #      - test
 #      - deploy:
