@@ -175,12 +175,12 @@ workflows:
   test_and_release:
     jobs:
       - test_node_6
-#      - test_node_7
-#      - test_node_8
-#      - test_node_9
-#      - test_node_10
-#      - test_node_11
-#      - test_node_12
+      - test_node_7
+      - test_node_8
+      - test_node_9
+      - test_node_10
+      - test_node_11
+      - test_node_12
 #      - build
 #      - test
 #      - deploy:
