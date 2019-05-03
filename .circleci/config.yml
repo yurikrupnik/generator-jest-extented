@@ -1,7 +1,28 @@
 version: 2
 jobs:
+  test:
+    working_directory: ~/mern-starter/test
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@5'
+            - restore_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+            - run:
+                name: install-npm-wee
+                command: npm install
+            - save_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+                paths:
+                  - ./node_modules
+            - run:
+                name: coverage
+                command: npm run test:coverage
   build:
-    working_directory: ~/mern-starter
+    working_directory: ~/mern-starter/build
     docker:
       - image: circleci/node:8
     steps:
@@ -21,9 +42,9 @@ jobs:
       - run:
           name: test
           command: npm run test
-      - run: # run coverage report
-          name: code-coverage
-          command: npm run test:coveralls
+#      - run: # run coverage report
+#          name: code-coverage
+#          command: npm run test:coveralls
       - store_artifacts: # special step to save test results as as artifact
            # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
            path: test-results.xml
@@ -33,3 +54,10 @@ jobs:
            prefix: coverage
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
            path: test-results.xml
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test
+      - build
