@@ -9,7 +9,7 @@
     "prsetest": "eslint app",
     "test": "jest app",
     "test:watch": "jest app--watch",
-    "test:coverage": "jest app--coverage",
+    "test:coverage": "jest app --coverage",
     "test:coveralls": "jest app --coverage --coverageReporters=text-lcov | coveralls",
     "prebuild": "rimraf dist",
     "build": "webpack"
