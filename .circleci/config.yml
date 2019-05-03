@@ -157,7 +157,7 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
-      - test
+#      - test
       - deploy:
           - requires:
               - test
