@@ -133,18 +133,15 @@ jobs:
             - ./node_modules
       - run:
           name: test
-          command: npm run test
+          command: npm run build
   deploy:
     <<: *node12
     steps:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Set registry URL
-          command: npm set registry https://packagecloud.io/example-user/example-repo/npm/
-      - run:
           name: Authenticate with registry
-          command: echo "//packagecloud.io/example-user/example-repo/npm/:_authToken=$PACKAGECLOUD_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish
@@ -184,6 +181,12 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
+      - build
+      - test
+      - deploy
+        - reuires:
+          - build
+          - test
 
 #      - test
 #      - build
