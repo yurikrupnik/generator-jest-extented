@@ -150,11 +150,11 @@ workflows:
 
   test-deploy:
     jobs:
-      - deploy:
+      - deploy
 #        requires:
 #          - build
 #          - test
-        filters:
+#        filters:
 #          tags:
 #            only: /^v.*/
 #          branches:
