@@ -40,7 +40,7 @@
     "collectCoverage": true
   },
   "files": [
-    "app"
+    "dist"
   ],
   "keywords": [
     "node",
