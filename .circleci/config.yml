@@ -161,8 +161,10 @@ jobs:
   deploy:
     <<: *node12
     steps:
-      - attach_workspace:
-          at: ~/repo
+#      - attach_workspace:
+#          at: ~/repo
+      - checkout
+      - run: npm run build
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
@@ -181,7 +183,9 @@ workflows:
       - test_node_10
       - test_node_11
       - test_node_12
-      - deploy
+      - deploy:
+        - requires:
+          - test_node_12
 #      - build
 #      - test
 #      - deploy:
