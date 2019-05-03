@@ -87,14 +87,39 @@ jobs:
           root: ~/repo
           paths: .
 
-  deploy:
-    <<: *node10
+  build:
+    working_directory: ~/tmp/local
+    docker:
+      - image: circleci/node:12
     steps:
-      #      - attach_workspace:
-      #          at: ~/repo
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+
       - run: npm install
-      - run: npm run build
+      - run:
+          name: Run tests
+          command: npm build
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths: .
+  deploy:
+#    <<: *node10
+
+    steps:
+      - attach_workspace:
+            at: /tmp/workspace
+#      - checkout
+#      - run: npm install
+#      - run: npm run build
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
@@ -122,20 +147,15 @@ workflows:
                 - master
     jobs:
       - test
-      - deploy
-#      - test
 
-#        filters:
-#          tags
-#      - build
-#      - test
-#      - deploy:
-#          - requires:
-#              - test
-#              - build
-
-#      - test
-#      - build
-#      - deploy:
-#          requires:
-#            - test
+  test-deploy:
+    jobs:
+      - deploy:
+        requires:
+          - build
+          - test
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
