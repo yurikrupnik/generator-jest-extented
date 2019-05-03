@@ -1,35 +1,114 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/mern-starter
+  test_node_6:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:6
     steps:
       - checkout
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@5'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-npm-wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: test
-          command: npm run test
-      - run: # run coverage report
-          name: code-coverage
-          command: echo coveralls
-      - store_artifacts: # special step to save test results as as artifact
-           # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-           path: test-results.xml
-           prefix: tests
-      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-           path: coverage
-           prefix: coverage
-      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-           path: test-results.xml
+            - restore_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+            - run:
+                name: install-npm-wee
+                command: npm install
+            - save_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+                paths:
+                  - ./node_modules
+            - run:
+                name: test
+                command: npm run test
+            - run: # run coverage report
+                name: code-coverage
+                command: echo coveralls
+            - store_artifacts: # special step to save test results as as artifact
+                # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+                path: test-results.xml
+                prefix: tests
+            - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+                path: test-results.xml
+    # Configure your test steps here (checkout, npm install, cache management, tests etc...)
+
+  test_node_8:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+          - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@5'
+            - restore_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+            - run:
+                name: install-npm-wee
+                command: npm install
+            - save_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+                paths:
+                  - ./node_modules
+            - run:
+                name: test
+                command: npm run test
+            - run: # run coverage report
+                name: code-coverage
+                command: echo coveralls
+            - store_artifacts: # special step to save test results as as artifact
+                # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+                path: test-results.xml
+                prefix: tests
+            - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+                path: test-results.xml
+    test_node_10:
+      docker:
+        - image: circleci/node:8
+      steps:
+        - checkout
+            - run:
+            name: update-npm
+            command: 'sudo npm install -g npm@5'
+              - restore_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+              - run:
+                  name: install-npm-wee
+                  command: npm install
+              - save_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+                  paths:
+                    - ./node_modules
+              - run:
+                  name: test
+                  command: npm run test
+              - run: # run coverage report
+                  name: code-coverage
+                  command: echo coveralls
+              - store_artifacts: # special step to save test results as as artifact
+                  # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+                  path: test-results.xml
+                  prefix: tests
+              - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+                  path: test-results.xml
+  release:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run: npm install
+      # Run optional required steps before releasing
+      # - run: npm run build-script
+      - run: npx semantic-release
+
+workflows:
+  version: 2
+  test_and_release:
+    # Run the test jobs first, then the release only when all the test jobs are successful
+    jobs:
+      - test_node_6
+      - test_node_8
+      - test_node_10
+      - release:
+          requires:
+            - test_node_6
+            - test_node_8
+            - test_node_10
