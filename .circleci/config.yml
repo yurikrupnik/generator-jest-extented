@@ -4,17 +4,73 @@ version: 2
 #  docker:
 #    - image: circleci/node:10
 
+node6: &node6
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:6
+
+node7: &node7
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:7
+
+node8: &node8
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8
+
 node9: &node9
   working_directory: ~/repo
   docker:
     - image: circleci/node:9
+
+node10: &node10
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10
+
+node11: &node11
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:11
+
 jobs:
   test_node_6:
-    docker:
-      - image: circleci/node:6
+    <<: *node6
     steps:
       - checkout
       - run: npm install
+      - run: npm run test
+  test_node_7:
+    <<: *node7
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
+  test_node_8:
+    <<: *node8
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
+  test_node_9:
+    <<: *node9
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
+  test_node_10:
+    <<: *node10
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
+  test_node_11:
+    <<: *node11
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
 #  test:
 #    <<: *defaults
 #    steps:
@@ -84,12 +140,12 @@ jobs:
 #          name: Publish package
 #          command: npm publish
 
-workflows:
-  version: 2
-  test_and_release:
-    jobs:
-      - test
-      - build
+#workflows:
+#  version: 2
+#  test_and_release:
+#    jobs:
+#      - test
+#      - build
 #      - deploy:
 #          requires:
 #            - test
