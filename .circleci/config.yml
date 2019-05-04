@@ -95,7 +95,7 @@ workflows:
       - deploy:
         requires:
           - build
-        filters:
+        filters
           tags:
             only: /^v.*/
           branches:
