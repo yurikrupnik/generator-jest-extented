@@ -84,7 +84,7 @@ jobs:
           command: npm publish
 
 workflows:
-  version: 2
+  version: 2.1
   test_all:
     jobs:
       - test_latest_node
