@@ -46,9 +46,7 @@ jobs:
 #          paths: .
 
   build:
-    working_directory: ~/tmp/local
-    docker:
-      - image: circleci/node:12
+    <<: *node
     steps:
       - checkout
       - restore_cache:
