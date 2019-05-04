@@ -89,11 +89,11 @@ workflows:
     jobs:
       - test_latest_node
 
-#  test-build-deploy:
-#    jobs:
+  test-build-deploy:
+    jobs:
 #      - build
-#      - test
-#      - deploy
+      - test
+      - deploy
 #        requires:
 #          - build
 #          - test
