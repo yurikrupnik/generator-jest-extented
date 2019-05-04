@@ -93,12 +93,12 @@ workflows:
     jobs:
 #      - build
       - test
-      - deploy
+      - deploy:
 #        requires:
 #          - build
 #          - test
-#        filters:
-#          tags:
-#            only: /^v.*/
-#          branches:
-#            ignore: /.*/
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
