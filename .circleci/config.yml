@@ -92,9 +92,9 @@ workflows:
   test-build-deploy:
     jobs:
       - test
-      - deploy:
-          branch: master
-          tag: /(v)?[0-9]+(\.[0-9]+)*/
+#      - deploy:
+#          branch: master
+#          tag: /(v)?[0-9]+(\.[0-9]+)*/
 
 #        requires:
 #          - build
